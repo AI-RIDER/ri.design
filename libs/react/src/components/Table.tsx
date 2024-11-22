@@ -1,5 +1,6 @@
 import {
   createContext,
+  FC,
   HTMLAttributes,
   Key,
   ReactNode,
@@ -18,7 +19,7 @@ const SelectionContext = createContext<{
 }>({
   selectedKeyMap: new Map<Key, boolean>(),
   rowSelection: undefined,
-  setSelectedKey: () => {}
+  setSelectedKey: () => {},
 });
 
 function useSelection() {
@@ -52,16 +53,25 @@ export function Row({ valueKey, children }: RowProps) {
   const selected = selectedKeyMap.has(valueKey);
 
   return (
-    <tr className='border-b text-[#666A72]'>
-      {rowSelection && <Cell><Checkbox color="blue" checked={selected} onChange={(c) => {
-        if(c) {
-          selectedKeyMap.set(valueKey, true);
-        } else {
-          selectedKeyMap.delete(valueKey);
-        }
+    <tr className="border-b text-[#666A72]">
+      {rowSelection && (
+        <Cell>
+          <Checkbox
+            color="blue"
+            checked={selected}
+            onChange={(c) => {
+              if (c) {
+                selectedKeyMap.set(valueKey, true);
+              } else {
+                selectedKeyMap.delete(valueKey);
+              }
 
-        setSelectedKey && setSelectedKey(Array.from(selectedKeyMap.keys()));
-      }}></Checkbox></Cell>}
+              setSelectedKey &&
+                setSelectedKey(Array.from(selectedKeyMap.keys()));
+            }}
+          ></Checkbox>
+        </Cell>
+      )}
       {typeof children === 'function'
         ? (children as RenderRow)({ selected })
         : children}
@@ -82,12 +92,7 @@ interface Props extends Omit<HTMLAttributes<HTMLElement>, 'children'> {
   selection?: TableSelection;
 }
 
-export default function Table({
-  heads,
-  children,
-  className = '',
-  selection,
-}: Props) {
+export function Table({ heads, children, className = '', selection }: Props) {
   const selectable = selection != null;
 
   const selectStatus = useMemo(() => {
@@ -112,7 +117,7 @@ export default function Table({
       return cache;
     }
 
-    selection!.selectedKeys?.forEach(key => {
+    selection!.selectedKeys?.forEach((key) => {
       cache.set(key, true);
     });
 
@@ -126,14 +131,18 @@ export default function Table({
         className
       )}
     >
-      <thead className='h-12'>
-        <tr className='bg-[#355381] font-bold text-white'>
+      <thead className="h-12">
+        <tr className="bg-[#355381] font-bold text-white">
           {selectable && (
             <Cell>
               <Checkbox
                 color="blue"
-                checked={selectStatus === 'partial' ? 'indeterminate' : selectStatus === 'all'}
-                onChange={checked => {
+                checked={
+                  selectStatus === 'partial'
+                    ? 'indeterminate'
+                    : selectStatus === 'all'
+                }
+                onChange={(checked) => {
                   if (selection?.setSelectedKeys) {
                     if (checked) {
                       selection?.setSelectedKeys(selection.keys);
@@ -151,12 +160,13 @@ export default function Table({
           ))}
         </tr>
       </thead>
-      <tbody className='bg-white'>
-        <SelectionContext.Provider value={{
-          selectedKeyMap: selectedCache,
-          rowSelection: (selectable && selection?.rowSelection != false),
-          setSelectedKey: selection?.setSelectedKeys
-        }}
+      <tbody className="bg-white">
+        <SelectionContext.Provider
+          value={{
+            selectedKeyMap: selectedCache,
+            rowSelection: selectable && selection?.rowSelection != false,
+            setSelectedKey: selection?.setSelectedKeys,
+          }}
         >
           {children}
         </SelectionContext.Provider>
@@ -164,3 +174,13 @@ export default function Table({
     </table>
   );
 }
+
+Table.Cell = Cell;
+Table.Row = Row;
+
+interface Table extends FC<Props> {
+  Cell: typeof Cell;
+  Row: typeof Row;
+}
+
+export default Table as Table;
