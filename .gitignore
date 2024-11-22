@@ -44,3 +44,5 @@ Thumbs.db
 
 storybook-static
 vite.config.*.timestamp*
+
+package-lock.json
