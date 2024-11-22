@@ -1,0 +1,24 @@
+import { Canvas, Meta, Story, Controls, Description } from '@storybook/blocks';
+
+import * as Stories from './Button.stories';
+
+import Button from './Button';
+
+<Meta of={Stories} />
+
+# Button
+
+<div style={{ display: 'flex', gap: '20px', justifyContent: 'center', alignItems: 'center' }}>
+  {['default', 'yellow', 'red', 'blue', 'green', 'none'].map((color) => (
+    <div key={color}>
+      <Button color={color}>Click Me</Button>
+      <p style={{ textAlign: 'center' }}>{color}</p>
+    </div>
+  ))}
+</div>
+
+<Canvas of={Stories.Standard} />
+
+<Controls />
+
+
