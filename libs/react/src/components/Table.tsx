@@ -100,6 +100,10 @@ export function Table({ heads, children, className = '', selection }: Props) {
       return 'no';
     }
 
+    if((selection?.keys?.length ?? 0) === 0) {
+      return 'no';
+    }
+
     if ((selection?.selectedKeys?.length ?? 0) >= selection.keys.length) {
       return 'all';
     }

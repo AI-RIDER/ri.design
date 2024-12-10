@@ -44,6 +44,8 @@ export default function Checkbox({
     checked ?? false
   );
 
+  const renderState = checked == undefined ? state : checked;
+
   return (
     <CheckboxPrimitive.Root
       className={twMerge(
@@ -51,7 +53,7 @@ export default function Checkbox({
         CheckboxColorTheme[color],
         className
       )}
-      checked={checked}
+      checked={renderState}
       onCheckedChange={(s) => {
         setState(s);
 
