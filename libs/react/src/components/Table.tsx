@@ -86,13 +86,13 @@ export interface TableSelection {
   rowSelection?: boolean;
 }
 
-interface Props extends Omit<HTMLAttributes<HTMLElement>, 'children'> {
+export interface TableProps extends Omit<HTMLAttributes<HTMLElement>, 'children'> {
   heads: ReactNode[];
   children: ReactNode;
   selection?: TableSelection;
 }
 
-export function Table({ heads, children, className = '', selection }: Props) {
+export function Table({ heads, children, className = '', selection }: TableProps) {
   const selectable = selection != null;
 
   const selectStatus = useMemo(() => {
@@ -182,7 +182,7 @@ export function Table({ heads, children, className = '', selection }: Props) {
 Table.Cell = Cell;
 Table.Row = Row;
 
-interface Table extends FC<Props> {
+interface Table extends FC<TableProps> {
   Cell: typeof Cell;
   Row: typeof Row;
 }

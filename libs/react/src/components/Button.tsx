@@ -2,7 +2,6 @@ import { ButtonHTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import { Color } from '../style';
-
 export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: Color;

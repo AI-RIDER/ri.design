@@ -1,4 +1,4 @@
-import { HTMLAttributes, useState } from 'react';
+import { useState } from 'react';
 
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { CheckIcon, DividerHorizontalIcon } from '@radix-ui/react-icons';
@@ -28,7 +28,7 @@ const IndicatorColorTheme: { [key in Color]: string } = {
 };
 
 export interface CheckboxProps
-  extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
+  extends Omit<CheckboxPrimitive.CheckboxProps, 'onChange'> {
   checked?: CheckboxPrimitive.CheckedState;
   onChange?: (checked: boolean) => void;
   color?: Color;
@@ -38,7 +38,7 @@ export default function Checkbox({
   checked,
   onChange,
   className = '',
-  color = 'default',
+  color = 'default'
 }: CheckboxProps) {
   const [state, setState] = useState<CheckboxPrimitive.CheckedState>(
     checked ?? false
