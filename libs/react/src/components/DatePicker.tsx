@@ -15,7 +15,7 @@ export type DatePickerProps = Omit<DayPickerPrimitive.DayPickerProps, 'mode'> & 
   className?: string;
   date: Date | undefined;
   mode?: DayPickerPrimitive.Mode;
-  onChange?: (date: Date | undefined) => void;
+  onChange?: (date: Date) => void;
   time?: boolean;
 };
 
@@ -38,7 +38,6 @@ export function DatePicker({
 
       onChange && onChange(date);
     }
-
   };
 
   const selectedDate = date || dateState;
