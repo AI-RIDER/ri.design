@@ -13,7 +13,7 @@ import { zhTW } from 'date-fns/locale';
 export type DatePickerProps = Omit<DayPickerPrimitive.DayPickerProps, 'mode'> & {
   locale?: DayPickerPrimitive.Locale;
   className?: string;
-  date: Date | undefined;
+  date?: Date;
   mode?: DayPickerPrimitive.Mode;
   onChange?: (date: Date) => void;
   time?: boolean;
