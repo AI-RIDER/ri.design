@@ -17,6 +17,10 @@ export type DatePickerProps = Omit<DayPickerPrimitive.DayPickerProps, 'mode'> & 
   mode?: DayPickerPrimitive.Mode;
   onChange?: (date: Date) => void;
   time?: boolean;
+  min?: Date,
+  max?: Date,
+  format?: string,
+  nav?: boolean
 };
 
 export function DatePicker({
@@ -27,6 +31,9 @@ export function DatePicker({
   classNames,
   mode,
   time,
+  min,
+  max,
+  nav,
   ...props
 }: DatePickerProps) {
   const [dateState, setDateState] = useState(date || new Date());
@@ -51,12 +58,19 @@ export function DatePicker({
   }
 
   const formatted = useMemo(() => {
+    let f = props.format || 'yyyy/MM/dd HH:mm:ss';
+
     if (time) {
-      return format(selectedDate, 'yyyy/MM/dd HH:mm:ss');
+      return format(selectedDate, f);
     }
 
-    return format(selectedDate, 'yyyy/MM/dd');
-  }, [selectedDate, time]);
+    f = props.format || 'yyyy/MM/dd';
+
+    // remove time part
+    f = f.replace(/[Hms:]/g, '');
+
+    return format(selectedDate, f);
+  }, [selectedDate, time, props.format]);
 
   return (
     <PopoverPrimitive.Root
@@ -89,17 +103,23 @@ export function DatePicker({
                 mode="single"
                 selected={selectedDate}
                 onSelect={handleDaySelect}
+                defaultMonth={selectedDate}
                 locale={locale}
                 classNames={{
                   day: '',
                   selected: 'rounded-full bg-blue-400 text-white',
                   day_button: 'w-10 h-10',
                   months: '',
-                  month_caption: 'h-10',
-                  nav: 'absolute right-6',
+                  month_caption: (nav === false) ? 'hidden' : 'h-10',
+                  nav: (nav === false) ? 'hidden' : 'absolute right-6',
                   chevron: 'fill-blue-500',
+                  disabled: 'text-gray-300',
                   ...classNames,
                 }}
+                disabled={{
+                  before: min,
+                  after: max,
+                } as DayPickerPrimitive.Matcher}
                 {...props}
               />
             </div>
