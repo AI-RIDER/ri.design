@@ -203,8 +203,8 @@ function TimePicker({ className, value, onChange }: TimePickerProps) {
     <div className="flex">
       <div>
         <div className="text-center">時</div>
-        <ScrollAreaPrimitive.Root className="h-[240px] w-[44px] overflow-hidden rounded bg-white">
-          <ScrollAreaPrimitive.Viewport className="size-full rounded">
+        <ScrollAreaPrimitive.Root className="rounded bg-white">
+          <ScrollAreaPrimitive.Viewport className="size-full h-[240px] w-[44px] overflow-hidden rounded">
             <div className="px-1 py-[2px]">
               {HOURS.map((h) => {
                 let v = (h + '').padStart(2, '0');
@@ -237,8 +237,8 @@ function TimePicker({ className, value, onChange }: TimePickerProps) {
 
       <div>
         <div className="text-center">分</div>
-        <ScrollAreaPrimitive.Root className="h-[240px] w-[44px] overflow-hidden rounded bg-white">
-          <ScrollAreaPrimitive.Viewport className="size-full rounded">
+        <ScrollAreaPrimitive.Root className="rounded bg-white">
+          <ScrollAreaPrimitive.Viewport className="size-full h-[240px] w-[44px] overflow-hidden rounded">
             <div className="px-1 py-[2px]">
               {MINUTES.map((h) => {
                 let v = (h + '').padStart(2, '0');
@@ -271,8 +271,8 @@ function TimePicker({ className, value, onChange }: TimePickerProps) {
 
       <div>
         <div className="text-center">秒</div>
-        <ScrollAreaPrimitive.Root className="h-[240px] w-[44px] overflow-hidden rounded bg-white">
-          <ScrollAreaPrimitive.Viewport className="size-full rounded">
+        <ScrollAreaPrimitive.Root className="rounded bg-white">
+          <ScrollAreaPrimitive.Viewport className="size-full h-[240px] w-[44px] overflow-hidden rounded">
             <div className="px-1 py-[2px]">
               {SECONDS.map((h) => {
                 let v = (h + '').padStart(2, '0');
