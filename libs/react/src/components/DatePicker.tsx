@@ -10,22 +10,25 @@ import Button from './Button';
 import { format, parse } from 'date-fns';
 import { zhTW } from 'date-fns/locale';
 
-export type DatePickerProps = Omit<DayPickerPrimitive.DayPickerProps, 'mode'> & {
+export type DatePickerProps = Omit<DayPickerPrimitive.DayPickerProps, 'mode' | 'classNames'> & {
   locale?: DayPickerPrimitive.Locale;
   className?: string;
-  date?: Date;
+  selected?: Date;
   mode?: DayPickerPrimitive.Mode;
-  onChange?: (date: Date) => void;
+  onChange?: (selected: Date) => void;
   time?: boolean;
   min?: Date,
   max?: Date,
   format?: string,
-  nav?: boolean
+  nav?: boolean,
+  classNames?: {
+    calendar: string
+  }
 };
 
 export function DatePicker({
   className,
-  date,
+  selected,
   onChange,
   locale = zhTW,
   classNames,
@@ -36,18 +39,18 @@ export function DatePicker({
   nav,
   ...props
 }: DatePickerProps) {
-  const [dateState, setDateState] = useState(date || new Date());
+  const [dateState, setDateState] = useState(selected || new Date());
   const [open, setOpen] = useState(false);
 
-  const handleDaySelect = (date: Date | undefined) => {
-    if(date) {
-      setDateState(date);
+  const handleDaySelect = (selected: Date | undefined) => {
+    if(selected) {
+      setDateState(selected);
 
-      onChange && onChange(date);
+      onChange && onChange(selected);
     }
   };
 
-  const selectedDate = date || dateState;
+  const selectedDate = selected || dateState;
 
   const handleTimeChange = (time: string) => {
     let d = parse(time, 'HH:mm:ss', selectedDate);
@@ -93,7 +96,8 @@ export function DatePicker({
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content
           className={twMerge(
-            'rounded bg-white p-5 shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] will-change-[transform,opacity] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=top]:animate-slideDownAndFade'
+            'rounded bg-white p-5 shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] will-change-[transform,opacity] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=top]:animate-slideDownAndFade',
+            classNames?.calendar ?? ''
           )}
           sideOffset={5}
         >
@@ -113,8 +117,7 @@ export function DatePicker({
                   month_caption: (nav === false) ? 'hidden' : 'h-10',
                   nav: (nav === false) ? 'hidden' : 'absolute right-6',
                   chevron: 'fill-blue-500',
-                  disabled: 'text-gray-300',
-                  ...classNames,
+                  disabled: 'text-gray-300'
                 }}
                 disabled={{
                   before: min,
