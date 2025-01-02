@@ -20,10 +20,12 @@ interface SidebarMenuProps {
   indicator?: ReactNode | false;
   icon?: ReactNode | false;
   children?: ReactNode | (({ open }: { open: boolean }) => ReactNode);
+  open?: boolean;
 }
 
 interface SidebarMenuItemProps {
   children?: ReactNode;
+  selected?: boolean;
 }
 
 interface SidebarGroupProps {
@@ -43,9 +45,10 @@ interface SidebarFooterProps {}
 
 interface SidebarItemProps {
   value: string;
-  title?: ReactNode | (({ open }: { open: boolean }) => ReactNode);
+  title?: ReactNode;
   indicator?: ReactNode | false;
   icon?: ReactNode | false;
+  selected?: boolean;
 }
 
 function SidebarHeader({ children }: SidebarHeaderProps) {
@@ -58,10 +61,11 @@ function SidebarMenu({
   indicator,
   title,
   children,
+  open
 }: SidebarMenuProps) {
   const { selected } = useSidebar();
 
-  const open = value === selected;
+  const isOpen = open != null ? open : value === selected;
 
   return (
     <AccrodionPrimitive.Item className="text-white" value={value}>
@@ -76,7 +80,7 @@ function SidebarMenu({
               <div className="px-2">{icon}</div>
             )}
 
-            {typeof title === 'function' ? title({ open }) : title}
+            {typeof title === 'function' ? title({ open: isOpen }) : title}
           </div>
 
           {typeof indicator !== 'boolean' &&
@@ -84,7 +88,7 @@ function SidebarMenu({
               <ChevronRightIcon
                 className={twMerge(
                   'h-5 w-5',
-                  open ? 'rotate-90' : '',
+                  isOpen ? 'rotate-90' : '',
                   'transition-transform'
                 )}
               />
@@ -98,7 +102,7 @@ function SidebarMenu({
         <ul
           className=""
         >
-          {typeof children === 'function' ? children({ open }) : children}
+          {typeof children === 'function' ? children({ open: isOpen }) : children}
         </ul>
       </AccrodionPrimitive.Content>
     </AccrodionPrimitive.Item>
@@ -108,17 +112,18 @@ function SidebarMenu({
 function SidebarItem({
   value,
   icon,
-  title
+  title,
+  selected
 }: SidebarItemProps) {
-  const { selected } = useSidebar();
+  const sidebar = useSidebar();
 
-  const open = value === selected;
+  const isSelected = selected != null ? selected : value === sidebar.selected;
 
   return (
     <AccrodionPrimitive.Item className="text-white" value={value}>
       <AccrodionPrimitive.Header
         className={`no-underline min-h-[3.5em] flex items-center cursor-pointer ${
-          open ? 'bg-[#448AF3]' : ''
+          isSelected ? 'bg-[#448AF3]' : ''
         } px-4 transition-colors`}
       >
         <AccrodionPrimitive.Trigger className="flex justify-between w-full items-center hover:opacity-80">
@@ -127,7 +132,7 @@ function SidebarItem({
               <div className="px-2">{icon}</div>
             )}
 
-            {typeof title === 'function' ? title({ open }) : title}
+            {title}
           </div>
         </AccrodionPrimitive.Trigger>
       </AccrodionPrimitive.Header>
