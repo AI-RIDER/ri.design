@@ -8,7 +8,7 @@ import {
   BookmarkIcon,
 } from '@radix-ui/react-icons';
 
-const { Menu, MenuItem, Header } = Sidebar;
+const { Menu, MenuItem, Header, Item } = Sidebar;
 
 const meta: Meta<typeof Sidebar> = {
   component: Sidebar,
@@ -51,6 +51,10 @@ export const Standard: Story = {
           </Header>
           {items.map((item) => {
             const { id, title, content, icon } = item;
+
+            if (!content) {
+              return <Item value={id} title={title} icon={icon}></Item>;
+            }
 
             return (
               <Menu value={id} title={title} icon={icon}>

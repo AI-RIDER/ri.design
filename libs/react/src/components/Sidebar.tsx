@@ -41,6 +41,13 @@ interface SidebarHeaderProps {
 
 interface SidebarFooterProps {}
 
+interface SidebarItemProps {
+  value: string;
+  title?: ReactNode | (({ open }: { open: boolean }) => ReactNode);
+  indicator?: ReactNode | false;
+  icon?: ReactNode | false;
+}
+
 function SidebarHeader({ children }: SidebarHeaderProps) {
   return <div className="flex justify-center w-full text-2xl">{children}</div>;
 }
@@ -73,7 +80,6 @@ function SidebarMenu({
           </div>
 
           {typeof indicator !== 'boolean' &&
-            children != null &&
             (indicator || (
               <ChevronRightIcon
                 className={twMerge(
@@ -95,6 +101,36 @@ function SidebarMenu({
           {typeof children === 'function' ? children({ open }) : children}
         </ul>
       </AccrodionPrimitive.Content>
+    </AccrodionPrimitive.Item>
+  );
+}
+
+function SidebarItem({
+  value,
+  icon,
+  title
+}: SidebarItemProps) {
+  const { selected } = useSidebar();
+
+  const open = value === selected;
+
+  return (
+    <AccrodionPrimitive.Item className="text-white" value={value}>
+      <AccrodionPrimitive.Header
+        className={`no-underline min-h-[3.5em] flex items-center cursor-pointer ${
+          open ? 'bg-[#448AF3]' : ''
+        } px-4 transition-colors`}
+      >
+        <AccrodionPrimitive.Trigger className="flex justify-between w-full items-center hover:opacity-80">
+          <div className="flex items-center">
+            {typeof icon !== 'boolean' && icon && (
+              <div className="px-2">{icon}</div>
+            )}
+
+            {typeof title === 'function' ? title({ open }) : title}
+          </div>
+        </AccrodionPrimitive.Trigger>
+      </AccrodionPrimitive.Header>
     </AccrodionPrimitive.Item>
   );
 }
@@ -133,11 +169,13 @@ interface Sidebar extends FC<SidebarProps> {
   MenuItem: typeof SidebarMenuItem;
   Group: typeof SidebarGroup;
   Header: typeof SidebarHeader;
+  Item: typeof SidebarItem;
 }
 
 Sidebar.Menu = SidebarMenu;
 Sidebar.MenuItem = SidebarMenuItem;
 Sidebar.Group = SidebarGroup;
 Sidebar.Header = SidebarHeader;
+Sidebar.Item = SidebarItem;
 
 export default Sidebar as Sidebar;
