@@ -144,7 +144,23 @@ function SidebarMenuItem({ children }: SidebarMenuItemProps) {
   return <li className="py-2 px-6 hover:text-gray-300 cursor-pointer">{children}</li>;
 }
 
-function SidebarGroup() {}
+function SidebarGroup({ children, title }: SidebarGroupProps) {
+
+  return (
+    <div>
+      <div className="px-4 flex justify-center font-bold py-2">
+        {
+          title
+        }
+      </div>
+
+
+      {
+        children
+      }
+    </div>
+  )
+}
 
 function Sidebar({ children }: SidebarProps) {
   const [selected, setSelected] = useState('');
