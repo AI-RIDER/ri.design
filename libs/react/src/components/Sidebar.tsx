@@ -71,7 +71,7 @@ function SidebarMenu({
     <AccrodionPrimitive.Item className="text-white" value={value}>
       <AccrodionPrimitive.Header
         className={`no-underline min-h-[3.5em] flex items-center cursor-pointer ${
-          open ? 'bg-[#448AF3]' : ''
+          isOpen ? 'bg-[#448AF3]' : ''
         } px-4 transition-colors`}
       >
         <AccrodionPrimitive.Trigger className="flex justify-between w-full items-center hover:opacity-80">
