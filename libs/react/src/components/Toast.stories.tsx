@@ -15,12 +15,6 @@ export default meta;
 
 type Story = StoryObj<typeof Toast>;
 
-function oneWeekAway(date: Date) {
-  const now = new Date();
-  const inOneWeek = now.setDate(now.getDate() + 7);
-  return new Date(inOneWeek);
-}
-
 function prettyDate(date: Date) {
   return new Intl.DateTimeFormat('en-US', {
     dateStyle: 'full',
