@@ -73,5 +73,6 @@
     "e2e-ci--**/*": {
       "dependsOn": ["^build"]
     }
-  }
+  },
+  "useDaemonProcess": false
 }

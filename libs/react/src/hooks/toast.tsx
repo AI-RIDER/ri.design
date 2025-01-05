@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, ReactDOM, useState } from 'react';
 import { createRoot } from 'react-dom/client'
 import Toast, { type ToastProps } from '../components/Toast';
-import { createPortal } from 'react-dom';
 
 function getRootEl() {
   return document.querySelector('body');
@@ -14,7 +13,7 @@ toastRootEl.id = "__ri_toast_root";
 
 rootEl?.append(toastRootEl);
 
-const root = createRoot(toastRootEl)
+const root = createRoot(toastRootEl);
 
 function useToast() {
   const [open, setOpen] = useState(false);
@@ -23,7 +22,7 @@ function useToast() {
     open: false
   });
 
-  const timeoutRef = useRef(0);
+  const timeoutRef = useRef<any>(0);
 
   useEffect(() => {
     const mix: ToastProps = {
@@ -56,7 +55,7 @@ function useToast() {
 
     setOpen(false);
 
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       setOpen(true);
     }, 100);
   }, [setProps, setOpen]);

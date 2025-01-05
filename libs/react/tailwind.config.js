@@ -14,8 +14,6 @@ const config = overrideTailwindConfig({
   plugins: [],
 });
 
-console.log(JSON.stringify(config))
-
 /** @type {import('tailwindcss').Config} */
 module.exports = config;
 
