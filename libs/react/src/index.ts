@@ -5,6 +5,8 @@ export { default as Switch, type SwitchProps } from './components/Switch';
 export { default as Table, type TableProps } from './components/Table';
 export { default as DatePicker, type DatePickerProps } from './components/DatePicker';
 export { default as Sidebar, type SidebarProps } from './components/Sidebar';
+export { default as Toast } from './components/Toast';
+export { default as Dialog } from './components/Dialog';
 
 export type { Color } from './style';
 
