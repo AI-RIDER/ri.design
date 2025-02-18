@@ -1,4 +1,4 @@
-import { Checkbox } from '@ri/react';
+import { Checkbox } from '@ridesign/react';
 
 export function App() {
   return (
