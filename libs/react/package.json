@@ -12,5 +12,8 @@
       "import": "./hooks/index.mjs",
       "require": "./hooks/index.js"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
