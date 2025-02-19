@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import Pagination, { type PaginationProps } from './Pagination';
+import Pagination from './Pagination';
 
 const meta: Meta<typeof Pagination> = {
   component: Pagination,
@@ -25,28 +26,32 @@ export default meta;
 
 type Story = StoryObj<typeof Pagination>;
 
-const PaginationWrapper = ({
-  totalPages,
-  currentPage,
-  maxItems,
-}: PaginationProps) => {
-  const [page, setPage] = useState(currentPage);
-  return (
-    <Pagination
-      totalPages={totalPages}
-      currentPage={page}
-      maxItems={maxItems}
-      gotoPage={setPage}
-    />
-  );
-};
-
 export const Standard: Story = {
-  render: (args) => <PaginationWrapper {...args} />,
+  render: (args) => {
+    const [page, setPage] = useState<number | undefined>(args.currentPage);
+    return (
+      <Pagination
+        totalPages={args.totalPages}
+        currentPage={page}
+        maxItems={args.maxItems}
+        gotoPage={setPage}
+      />
+    );
+  },
 };
 
 export const WithFewPages: Story = {
-  render: (args) => <PaginationWrapper {...args} />,
+  render: (args) => {
+    const [page, setPage] = useState<number | undefined>(args.currentPage);
+    return (
+      <Pagination
+        totalPages={args.totalPages}
+        currentPage={page}
+        maxItems={args.maxItems}
+        gotoPage={setPage}
+      />
+    );
+  },
   args: {
     totalPages: 3,
     currentPage: 1,
@@ -54,7 +59,17 @@ export const WithFewPages: Story = {
 };
 
 export const ManyPages: Story = {
-  render: (args) => <PaginationWrapper {...args} />,
+  render: (args) => {
+    const [page, setPage] = useState<number | undefined>(args.currentPage);
+    return (
+      <Pagination
+        totalPages={args.totalPages}
+        currentPage={page}
+        maxItems={args.maxItems}
+        gotoPage={setPage}
+      />
+    );
+  },
   args: {
     totalPages: 20,
     currentPage: 10,
@@ -62,7 +77,17 @@ export const ManyPages: Story = {
 };
 
 export const CustomMaxItems: Story = {
-  render: (args) => <PaginationWrapper {...args} />,
+  render: (args) => {
+    const [page, setPage] = useState<number | undefined>(args.currentPage);
+    return (
+      <Pagination
+        totalPages={args.totalPages}
+        currentPage={page}
+        maxItems={args.maxItems}
+        gotoPage={setPage}
+      />
+    );
+  },
   args: {
     totalPages: 20,
     currentPage: 10,

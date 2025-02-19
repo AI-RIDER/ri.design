@@ -127,7 +127,7 @@ export default function Pagination({
   return (
     <div className={twMerge('flex items-center gap-2', className)}>
       <PaginationBtn onClick={() => safeGotoPage(currentPage - 1)}>
-        <ChevronLeftIcon className="size-4" viewBox="2 0 24 24" />
+        <ChevronLeftIcon className="size-4" viewBox="0 0 15 15" />
       </PaginationBtn>
       {items.map((item, index) => (
         <Item
@@ -138,7 +138,7 @@ export default function Pagination({
         />
       ))}
       <PaginationBtn onClick={() => safeGotoPage(currentPage + 1)}>
-        <ChevronRightIcon className="size-4" viewBox="-2 0 24 24" />
+        <ChevronRightIcon className="size-4" viewBox="0 0 15 15" />
       </PaginationBtn>
     </div>
   );
