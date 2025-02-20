@@ -7,6 +7,7 @@ export { default as DatePicker, type DatePickerProps } from './components/DatePi
 export { default as Sidebar, type SidebarProps } from './components/Sidebar';
 export { default as Toast } from './components/Toast';
 export { default as Dialog } from './components/Dialog';
+export { default as Pagination } from './components/Pagination';
 
 export type { Color } from './style';
 
