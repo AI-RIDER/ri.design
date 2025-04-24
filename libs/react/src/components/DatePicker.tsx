@@ -53,20 +53,22 @@ export function DatePicker({
   const [dateState, setDateState] = useState(selected || new Date());
   const [open, setOpen] = useState(false);
 
+  const selectedDate = selected || dateState;
   const handleDaySelect = (selected: Date | undefined) => {
     if(selected) {
-      setDateState(selected);
-      onChange && onChange(selected);
+      let newDate = new Date(selectedDate);
+      newDate.setFullYear(selected.getFullYear());
+      newDate.setMonth(selected.getMonth());
+      newDate.setDate(selected.getDate());
+
+      setDateState(newDate);
+      onChange && onChange(newDate);
     }
   };
-
-  const selectedDate = selected || dateState;
-  const yearOptions = generateYearOptions(new Date().getFullYear());
 
   const handleTimeChange = (time: string) => {
     const d = parse(time, 'HH:mm:ss', selectedDate);
     setDateState(d);
-    console.log(d)
     onChange && onChange(d);
   }
 
